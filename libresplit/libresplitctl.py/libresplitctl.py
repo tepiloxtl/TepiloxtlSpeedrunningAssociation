@@ -12,7 +12,8 @@ def send_command(command_byte):
 
         # 4 bytes for length (Big Endian), followed by the data
         # '>I' means: Big Endian (>), Unsigned Integer (I)
-        payload = bytes([command_byte])
+        # '<I' means: Little Endian (<), Unsigned Integer (I)
+        payload = struct.pack('<I', command_byte)
         length_header = struct.pack('>I', len(payload))
 
         sock.sendall(length_header + payload)
